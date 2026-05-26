@@ -3,7 +3,6 @@ import random
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
-# ضع توكن البوت هنا
 BOT_TOKEN = "8704302525:AAFYQoHZmJi-42scIIrRvr46GIw9goigJtM"
 
 logging.basicConfig(level=logging.INFO)
@@ -11,8 +10,6 @@ logging.basicConfig(level=logging.INFO)
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     name = user.first_name
-
-    # "قياس" النسبة 😄
     score = random.randint(1, 100)
 
     if score >= 90:
@@ -43,13 +40,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await update.message.reply_text(message)
 
-
-def main():
+if __name__ == "__main__":
     app = ApplicationBuilder().token(BOT_TOKEN).build()
     app.add_handler(CommandHandler("start", start))
-    print("✅ البوت شغّال! اضغط Ctrl+C لإيقافه.")
-    app.run_polling()
-
-
-if __name__ == "__main__":
-    main()
+    print("✅ البوت شغّال!")
+    app.run_polling(drop_pending_updates=True)
